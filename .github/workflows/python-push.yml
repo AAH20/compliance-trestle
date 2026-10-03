@@ -13,6 +13,7 @@ permissions: {}
 jobs:
   set-versions:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     outputs:
       min: ${{ steps.versions.outputs.min }}
       max: ${{ steps.versions.outputs.max }}
@@ -121,6 +122,7 @@ jobs:
   test-with-codegen:
     needs: set-versions
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -167,6 +169,7 @@ jobs:
         make test
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     concurrency:
       group: deploy-${{ github.ref }}
       cancel-in-progress: false
@@ -307,6 +310,7 @@ jobs:
   merge-main-to-develop:
     name: Merge main -> develop
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: deploy
     concurrency:
       group: ${{ github.ref }}-${{ github.workflow }}-${{ github.job }}-main
