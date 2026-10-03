@@ -14,6 +14,7 @@ concurrency:
 jobs:
   set-versions:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     outputs:
       min: ${{ steps.versions.outputs.min }}
       max: ${{ steps.versions.outputs.max }}
@@ -29,6 +30,7 @@ jobs:
         echo "max=$max_version" >> $GITHUB_OUTPUT
   mike-version:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: [ set-versions ]
     outputs:
       mver: ${{ steps.versions.outputs.mver }}
@@ -47,6 +49,7 @@ jobs:
         echo "mver=$mike_version" >> $GITHUB_OUTPUT
   deploy-docs:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: [ mike-version, set-versions ]
     steps:
     - uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
